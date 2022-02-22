@@ -275,24 +275,29 @@ def draw():
         DISPLAYSURF.blit(label_recording, (100, 60))
         tiempo_final = datetime.now() 
         tiempo_transcurrido = tiempo_final - inicio_de_tiempo
-        txt_time = myfont.render(segToMin(tiempo_transcurrido.seconds), 1 , BLACK)
+        txt_time = myfont.render("Time = " + segToMin(tiempo_transcurrido.seconds), 1 , BLACK)
         DISPLAYSURF.blit(txt_time, (130, 120))
         show_option(0, SQUARE_ICON, "STOP")
 
     elif state == "LIST":
         first = 0
-        if file_selected > 8:
-            first = file_selected - 8
+        if file_selected > 7:
+            first = file_selected - 7
+        last = first + 8
+        if last > len(audio_lst):
+            last = len(audio_lst)
 
         posy =10
         # myfont2 = pygame.font.SysFont("Consolas", 22)
-        for x in range(first, len(audio_lst)):
+        for x in range(first, last):
             item = audio_lst[x]
-            label = myfont.render(item, 1, BLACK)
+            label = myfont.render(str(x+1) + "."+ item, 1, BLACK)
             DISPLAYSURF.blit(label, (10, posy))
             posy = posy + 25
 
         posy = (10 + file_selected*25)
+        if file_selected > 7:
+            posy = (10 + 175)
         pygame.draw.rect(DISPLAYSURF, RED, (5, posy, 310, 25), 2)
 
         show_option(0, TRIANGLE_ICON, "SEL")
