@@ -54,8 +54,10 @@ class kbrd:
                 if key == kbrd.NO_KEY:
                     # time.sleep(0.1)
                     state = "RELEASE"
-                '''elif time.time() - inicio_de_tiempo > 1:
-                    state = "RELEASE"'''
+                elif time.time() - inicio_de_tiempo > 1:
+                    self.key_pressed = last_key
+                    self.long_press = True
+                    state = "WAIT"
             elif state == "RELEASE":
                 tiempo_final = time.time()
                 tiempo_transcurrido = tiempo_final - inicio_de_tiempo
@@ -66,6 +68,9 @@ class kbrd:
                 self.key_pressed = last_key
                 self.long_press = long_press
                 state = "IDLE"
+            elif state == "WAIT":
+                if key == kbrd.NO_KEY:
+                    state = "IDLE"
             time.sleep(0.1)
 
     def get_pressed(self):
