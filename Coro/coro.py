@@ -70,7 +70,6 @@ def get_list_audio():
 def list_process():
     global file_selected
     global state
-    global inicio_de_tiempo
     ret = False
     if cmd[0] == kbrd.X_KEY:
         state = "STOP"
